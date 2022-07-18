@@ -6,29 +6,29 @@ var $noteList = $(".list-container .list-group");
 
 var activeNote = {};
 
-var getNotes = function() {
+var getNotes = function () {
   return $.ajax({
     url: "/api/notes",
-    method: "GET"
+    method: "GET",
   });
 };
 
-var saveNote = function(note) {
+var saveNote = function (note) {
   return $.ajax({
     url: "/api/notes",
     data: note,
-    method: "POST"
+    method: "POST",
   });
 };
 
-var deleteNote = function(id) {
+var deleteNote = function (id) {
   return $.ajax({
     url: "api/notes/" + id,
-    method: "DELETE"
+    method: "DELETE",
   });
 };
 
-var renderActiveNote = function() {
+var renderActiveNote = function () {
   $saveNoteBtn.hide();
 
   if (activeNote.id) {
@@ -44,46 +44,44 @@ var renderActiveNote = function() {
   }
 };
 
-var handleNoteSave = function() {
+var handleNoteSave = function () {
   var newNote = {
     title: $noteTitle.val(),
-    text: $noteText.val()
+    text: $noteText.val(),
   };
 
-  saveNote(newNote).then(function(data) {
+  saveNote(newNote).then(function (data) {
     getAndRenderNotes();
     renderActiveNote();
   });
 };
 
-var handleNoteDelete = function(event) {
+var handleNoteDelete = function (event) {
   event.stopPropagation();
 
-  var note = $(this)
-    .parent(".list-group-item")
-    .data();
+  var note = $(this).parent(".list-group-item").data();
 
   if (activeNote.id === note.id) {
     activeNote = {};
   }
 
-  deleteNote(note.id).then(function() {
+  deleteNote(note.id).then(function () {
     getAndRenderNotes();
     renderActiveNote();
   });
 };
 
-var handleNoteView = function() {
+var handleNoteView = function () {
   activeNote = $(this).data();
   renderActiveNote();
 };
 
-var handleNewNoteView = function() {
+var handleNewNoteView = function () {
   activeNote = {};
   renderActiveNote();
 };
 
-var handleRenderSaveBtn = function() {
+var handleRenderSaveBtn = function () {
   if (!$noteTitle.val().trim() || !$noteText.val().trim()) {
     $saveNoteBtn.hide();
   } else {
@@ -91,7 +89,7 @@ var handleRenderSaveBtn = function() {
   }
 };
 
-var renderNoteList = function(notes) {
+var renderNoteList = function (notes) {
   $noteList.empty();
 
   var noteListItems = [];
@@ -112,8 +110,8 @@ var renderNoteList = function(notes) {
   $noteList.append(noteListItems);
 };
 
-var getAndRenderNotes = function() {
-  return getNotes().then(function(data) {
+var getAndRenderNotes = function () {
+  return getNotes().then(function (data) {
     renderNoteList(data);
   });
 };
