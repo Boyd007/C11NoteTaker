@@ -21,7 +21,7 @@ The above criteria is met when the user
 * HTML
 * CSS
 * JS
-* Npm
+
 
 # GitHub
 
